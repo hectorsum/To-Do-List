@@ -1,0 +1,19 @@
+{
+  "notes":[
+    {
+      "id":1,
+      "activity":"Do homework",
+      "when": "25/04/21"
+    },
+    {
+      "id":2,
+      "activity":"Make the make",
+      "when": "25/03/21"
+    },
+    {
+      "id":3,
+      "activity":"Wash the dishes",
+      "when": "15/05/20"
+    }
+  ]
+}
