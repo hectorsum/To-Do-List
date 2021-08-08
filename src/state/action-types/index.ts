@@ -1,6 +1,8 @@
 export enum ActionType {
-  ADD = 'add',
-  EDIT = 'edit',
-  DELETE = 'delete',
-  RETRIEVE = 'retrieve'
+  ADD = 'ADD',
+  ADD_SUCCESS = "ADD_SUCCESS",
+  ADD_ERROR = "ADD_ERROR",
+  EDIT = 'EDIT',
+  DELETE = 'DELETE',
+  RETRIEVE = 'RETRIEVE',
 }

@@ -1,6 +1,6 @@
 import { ActionType } from "../action-types";
 
-interface Payload {
+export interface Payload {
   id?:number,
   activity: string,
   when: Date,
@@ -12,6 +12,9 @@ export interface State {
 }
 interface AddAction {
   type: ActionType.ADD,
+}
+interface AddSuccess {
+  type: ActionType.ADD_SUCCESS,
   payload: Payload
 }
 interface EditAction {
@@ -26,5 +29,14 @@ interface RetrieveAction {
   type: ActionType.RETRIEVE,
   payload: Payload
 }
+interface AddError {
+  type: ActionType.ADD_ERROR,
+  payload: Payload
+}
 
-export type Action = AddAction | EditAction | DeleteAction | RetrieveAction
+export type Action = AddAction | 
+                     AddSuccess |
+                     AddError |
+                     EditAction | 
+                     DeleteAction | 
+                     RetrieveAction

@@ -4,7 +4,7 @@ import { Action, State } from "../actions"
 const initialState: State = {
   notes: [],
   note: null,
-  loading:true
+  loading:false
 }
 
 const reducer = (state: State = initialState, action: Action) => {
@@ -12,8 +12,19 @@ const reducer = (state: State = initialState, action: Action) => {
     case ActionType.ADD:
       return {
         ...state,
+        loading:true
+      }
+    case ActionType.ADD_SUCCESS:
+      return {
+        ...state,
         notes: [action.payload, ...state.notes],
         loading:false
+      }
+    case ActionType.ADD_ERROR:
+      return {
+        ...state,
+        error:action.payload,
+        loading:false,
       }
     case ActionType.RETRIEVE:
       return {
