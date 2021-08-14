@@ -4,7 +4,8 @@ import { Action, State } from "../actions"
 const initialState: State = {
   notes: [],
   note: null,
-  loading:false
+  loading:false,
+  error:null
 }
 
 const reducer = (state: State = initialState, action: Action) => {

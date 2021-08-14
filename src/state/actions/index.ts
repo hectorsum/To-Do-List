@@ -9,6 +9,7 @@ export interface State {
   notes: Array<Payload>,
   note?:Payload | null,
   loading:Boolean,
+  error:Boolean | null
 }
 interface AddAction {
   type: ActionType.ADD,
@@ -31,7 +32,7 @@ interface RetrieveAction {
 }
 interface AddError {
   type: ActionType.ADD_ERROR,
-  payload: Payload
+  payload: boolean
 }
 
 export type Action = AddAction | 

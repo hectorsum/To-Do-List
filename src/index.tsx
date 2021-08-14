@@ -3,11 +3,20 @@ import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './state';
+import { positions, Provider as ProviderAlert } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+  timeout: 5000,
+  position: positions.BOTTOM_CENTER
+};
 
 ReactDOM.render(
-  // <Provider store={store}>
-    <App />
-  // </Provider>
+  <Provider store={store}>
+    <ProviderAlert template={AlertTemplate} {...options}>
+      <App />
+    </ProviderAlert>
+  </Provider>
   ,
   document.getElementById('root')
 );

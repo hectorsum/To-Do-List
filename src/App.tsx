@@ -5,7 +5,6 @@ import { Home } from './components/Home';
 import { store } from './state/store';
 function App() {
   return (
-    <Provider store={store}>
       <div className="wrapper">
         <h1>To - Do List</h1>
         <hr />
@@ -16,7 +15,6 @@ function App() {
           </Switch>
         </Router>
       </div>
-    </Provider>
   );
 }
 

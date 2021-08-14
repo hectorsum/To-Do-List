@@ -1,7 +1,6 @@
 import { ActionType } from "../action-types";
 import { Dispatch } from 'redux'
 import { Action, Payload } from '../actions'
-import axios from "axios";
 import axiosClient from "../../config/axios";
 
 export const createNoteAction = (note: Payload) => async (dispatch:Dispatch<Action>) => {
@@ -19,10 +18,11 @@ export const createNoteAction = (note: Payload) => async (dispatch:Dispatch<Acti
       type: ActionType.ADD_SUCCESS,
       payload: res.data
     })
+    
   } catch (err) {
     dispatch({
       type: ActionType.ADD_ERROR,
-      payload: note
+      payload: true
     })
   }
 }
