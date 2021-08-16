@@ -3,6 +3,7 @@ import { AiFillEdit, AiFillCheckCircle, AiFillDelete } from 'react-icons/all';
 import { ButtonType } from './Types';
 import { useDispatch } from 'react-redux';
 import { deleteNoteAction } from '../state/action-creators';
+import { Payload } from '../state/actions';
 interface Props {
   activity: string,
   id: number | null,
@@ -14,15 +15,15 @@ export const Note: React.FC<Props> = ({ activity, id }): JSX.Element => {
     if (!id) return;
     dispatch(deleteNoteAction(id));
   }
-  const handleUpdate = (id: number | null) => {
-    console.log('update');
+  const setCopy = (data: Payload): void => {
+    localStorage.setItem('activity',JSON.stringify(data));
   }
   return (
     <NoteCard>
       <ActivityText>{activity}</ActivityText>
       <ButtonWrapper>
         <ButtonAction href="#" type={ButtonType.ADD}><AiFillCheckCircle /></ButtonAction>
-        <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => handleUpdate(id)}><AiFillEdit /></ButtonAction>
+        <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => setCopy({id, activity})}><AiFillEdit /></ButtonAction>
         <ButtonAction href="#" type={ButtonType.DELETE} onClick={() => handleDelete(id)}><AiFillDelete /></ButtonAction>
       </ButtonWrapper>
     </NoteCard>
