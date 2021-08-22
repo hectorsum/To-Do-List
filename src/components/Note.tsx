@@ -4,27 +4,22 @@ import { ButtonType } from './Types';
 import { useDispatch } from 'react-redux';
 import { deleteNoteAction } from '../state/action-creators';
 import { Payload } from '../state/actions';
+import { useEffect, useState } from 'react';
 interface Props {
   activity: string,
   id: number | null,
+  editActivity: (id: number | null) => void,
+  removeActivity: (id: number | null) => void,
 }
-export const Note: React.FC<Props> = ({ activity, id }): JSX.Element => {
-  //we need to use dispatch in order to get access to actions-creators functions
-  const dispatch = useDispatch();
-  const handleDelete = (id: number | null) => {
-    if (!id) return;
-    dispatch(deleteNoteAction(id));
-  }
-  const setCopy = (data: Payload): void => {
-    localStorage.setItem('activity',JSON.stringify(data));
-  }
+
+export const Note: React.FC<Props> = ({ activity, id, editActivity, removeActivity }): JSX.Element => {
   return (
     <NoteCard>
       <ActivityText>{activity}</ActivityText>
       <ButtonWrapper>
         <ButtonAction href="#" type={ButtonType.ADD}><AiFillCheckCircle /></ButtonAction>
-        <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => setCopy({id, activity})}><AiFillEdit /></ButtonAction>
-        <ButtonAction href="#" type={ButtonType.DELETE} onClick={() => handleDelete(id)}><AiFillDelete /></ButtonAction>
+        <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => editActivity(id)}><AiFillEdit /></ButtonAction>
+        <ButtonAction href="#" type={ButtonType.DELETE} onClick={() => removeActivity(id)}><AiFillDelete /></ButtonAction>
       </ButtonWrapper>
     </NoteCard>
   )

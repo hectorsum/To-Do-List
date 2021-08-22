@@ -14,12 +14,14 @@ export interface Data {
 }
 
 type FormElement = React.SyntheticEvent
-export const ToDoForm: React.FC = (): JSX.Element => {
+interface Props {
+  isEditing: boolean,
+  edit: Payload,
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+}
+export const ToDoForm: React.FC<Props> = ({isEditing, edit, setIsEditing}): JSX.Element => {
+  console.log('edit: ',edit);
   const [activity, setActivity] = useState<string>("");
-  const [edit, setEdit] = useState<Payload>({
-    id: null,
-    activity: ''
-  });
   const dispatch = useDispatch();
   const alert = useAlert();
   //useSelector allows us to read whatever we have in the state
@@ -42,23 +44,13 @@ export const ToDoForm: React.FC = (): JSX.Element => {
   const handleUpdate = (e: FormElement) => {
     e.preventDefault();
     console.log('Updated!');
-    localStorage.removeItem('activity');
+    setIsEditing(false);
   }
-  useEffect(() => {
-    console.log('entering effect');
-    window.addEventListener("storage", () => {
-      let data: Payload = JSON.parse(localStorage.getItem('activity') || "{}");
-      setEdit({
-        activity: data.activity,
-        id:data.id
-      });
-    })
-  },[])
-  
+    
   return (
-    <Form onSubmit={(edit.id) ? handleUpdate : handleSubmit}>
-      <InputActivity type="text" name="activity" value={activity} onChange={handleActivity} autoComplete="off" />
-      <SubmitButton btnType={(edit.id) ? ButtonType.UPDATE : ButtonType.ADD} />
+    <Form onSubmit={(isEditing) ? handleUpdate : handleSubmit}>
+      <InputActivity type="text" name="activity" value={(isEditing) ? edit.activity : activity} onChange={handleActivity} autoComplete="off" />
+      <SubmitButton btnType={(isEditing) ? ButtonType.UPDATE : ButtonType.ADD} />
     </Form>
   )
 }
