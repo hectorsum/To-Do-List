@@ -38,13 +38,17 @@ interface RetrieveAction {
   type: ActionType.RETRIEVE,
   payload:boolean
 }
+interface RetrieveSingleNote {
+  type: ActionType.RETRIEVE_SINGLE_NOTE,
+  payload: Payload
+}
 interface RetrieveSuccess {
   type: ActionType.RETRIEVE_SUCCESS,
   payload: Payload
 }
 interface RetrieveError {
   type: ActionType.RETRIEVE_ERROR,
-  payload: boolean
+  payload: Error
 }
 interface DeleteError {
   type: ActionType.DELETE_ERROR,
@@ -63,4 +67,5 @@ export type Action = AddAction |
                      RetrieveAction |
                      RetrieveSuccess |
                      RetrieveError | 
-                     ClearNotes
+                     ClearNotes | 
+                     RetrieveSingleNote

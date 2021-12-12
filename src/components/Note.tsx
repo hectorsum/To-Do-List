@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { AiFillEdit, AiFillCheckCircle, AiFillDelete } from 'react-icons/all';
 import { ButtonType } from './Types';
-import { useDispatch } from 'react-redux';
-import { deleteNoteAction } from '../state/action-creators';
-import { Payload } from '../state/actions';
-import { useEffect, useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { deleteNoteAction } from '../state/action-creators';
+// import { Payload } from '../state/actions';
+// import { useEffect, useState } from 'react';
 interface Props {
   activity: string,
   id: number | null,

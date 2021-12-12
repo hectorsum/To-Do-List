@@ -7,18 +7,12 @@ import { BoxWrapper } from './NotesWrapper'
 import { Note } from './Note'
 import styled from 'styled-components';
 import { ToDoForm } from './Forms/ToDoForm'
+// import { connect } from "react-redux";
 
-const getLocalStorage = () => {
-  let list = localStorage.getItem("activity");
-  if (list) {
-    return (list = JSON.parse(localStorage.getItem("list") || "{}"));
-  } else {
-    return [];
-  }
-};
 
-export const Home: React.FC = (): JSX.Element => {
+const Home: React.FC = (): JSX.Element => {
   const data: State = useSelector((state: RootState) => state.notes)
+  console.log("notes: ",data);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [edit, setEdit] = useState<Payload>({
     id:null,
@@ -47,7 +41,6 @@ export const Home: React.FC = (): JSX.Element => {
       })
     }
   }
-
   return (
     <Wrapper>
       <ToDoForm isEditing={isEditing} edit={edit} setIsEditing={setIsEditing}/>
@@ -85,3 +78,5 @@ const Wrapper = styled.div`
     border:none;
   }
 `;
+
+export default Home;

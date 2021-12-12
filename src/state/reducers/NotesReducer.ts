@@ -4,7 +4,7 @@ import { Action, State } from "../actions"
 const initialState: State = {
   notes: [],
   note: null,
-  loading:false,
+  loading:true,
   error:null
 }
 
@@ -15,6 +15,12 @@ const reducer = (state: State = initialState, action: Action) => {
       return {
         ...state,
         loading:true
+      }
+    case ActionType.RETRIEVE_SINGLE_NOTE:
+      return {
+        ...state,
+        note: action.payload,
+        loading:false
       }
     case ActionType.ADD_SUCCESS:
       return {
@@ -32,21 +38,15 @@ const reducer = (state: State = initialState, action: Action) => {
     case ActionType.RETRIEVE_SUCCESS:
       return {
         ...state,
-        notes: action.payload, //this payload is going to be the fetch response
+        notes: action.payload, //this payload is going to be the receive response from actions
         loading:false,
         error:null
       }
     case ActionType.EDIT:
-      return state.notes.map((note) => {
-        if(note.id === action.payload.id){
-          return {
-            ...state.note,
-            notes:[...state.notes,action.payload]
-          }
-        }else{
-          return note;
-        }
-      })
+      return {
+        ...state,
+        notes: state.notes.map((note) => (note.id === action.payload.id) ?  note = action.payload : note)
+      }
     case ActionType.DELETE_ERROR:
       return {
         ...state,

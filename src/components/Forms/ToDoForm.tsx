@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useAlert } from 'react-alert';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { State } from '../../state';
-import { createNoteAction } from '../../state/action-creators';
+// import { State } from '../../state';
+import { createNoteAction, getSingleNote, updateNoteAction } from '../../state/action-creators';
 import { Payload } from '../../state/actions';
 import { SubmitButton } from '../Buttons/SubmitButton';
 import { InputActivity } from '../Inputs/InputActivity';
@@ -19,15 +19,19 @@ interface Props {
   edit: Payload,
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
-export const ToDoForm: React.FC<Props> = ({isEditing, edit, setIsEditing}): JSX.Element => {
-  console.log('edit: ',edit);
+enum PopupType {
+  ADD = "ADD",
+  UPDATE = "UPDATE",
+  DELETE = "DELETE"
+}
+export const ToDoForm: React.FC<Props> = ({ isEditing, edit, setIsEditing }): JSX.Element => {
   const [activity, setActivity] = useState<string>("");
   const dispatch = useDispatch();
   const alert = useAlert();
-  //useSelector allows us to read whatever we have in the state
-  const { error } = useSelector((state: State) => state.notes);
   //To have interaction with action functions we need to insert it to a dispatch
   const addNote = (data: Data) => dispatch(createNoteAction(data));
+  const updateNote = (data: Payload) => dispatch(updateNoteAction(data));
+
   const handleActivity = (e: React.ChangeEvent<HTMLInputElement>) => {
     setActivity(e.target.value);
   }
@@ -41,15 +45,37 @@ export const ToDoForm: React.FC<Props> = ({isEditing, edit, setIsEditing}): JSX.
     setActivity('');
     alert.success("New note added!");
   }
+  const emptyField = (): void => setActivity("");
+  const popupMessage = (msg: string, type: PopupType): void => {
+    if (PopupType.ADD === type){
+      alert.success(msg);
+    }else if (PopupType.UPDATE === type){
+      alert.info(msg);
+    }else if (PopupType.DELETE === type){
+      alert.info(msg)
+    }
+  }
+
   const handleUpdate = (e: FormElement) => {
     e.preventDefault();
-    console.log('Updated!');
+    let { id } = edit;
+    updateNote({id, activity});
     setIsEditing(false);
+    emptyField();
+    popupMessage("Note Updated!", PopupType.UPDATE);
   }
-    
+  useEffect(() => {
+    if(isEditing){
+      setActivity(edit.activity);
+      if (edit.id){
+        const retrieveNotes = (id) => dispatch(getSingleNote(id));
+        retrieveNotes(edit.id);
+      }
+    }
+  },[edit.activity,isEditing, dispatch, edit.id])
   return (
     <Form onSubmit={(isEditing) ? handleUpdate : handleSubmit}>
-      <InputActivity type="text" name="activity" value={(isEditing) ? edit.activity : activity} onChange={handleActivity} autoComplete="off" />
+      <InputActivity type="text" name="activity" value={activity} onChange={handleActivity} autoComplete="off" />
       <SubmitButton btnType={(isEditing) ? ButtonType.UPDATE : ButtonType.ADD} />
     </Form>
   )
