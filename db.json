@@ -1,19 +1,14 @@
 {
   "notes": [
     {
-      "id": 1,
-      "activity": "dsada000",
-      "isDone": true
+      "activity": "sadsada",
+      "isDone": false,
+      "id": 8
     },
     {
-      "id": 2,
-      "activity": "dsadsa",
-      "isDone": true
-    },
-    {
-      "id": 3,
-      "activity": "123123",
-      "isDone": true
+      "activity": "21312312",
+      "isDone": false,
+      "id": 9
     }
   ]
 }

@@ -20,10 +20,11 @@ interface Props {
   edit: Payload,
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
-enum PopupType {
+export enum PopupType {
   ADD = "ADD",
   UPDATE = "UPDATE",
-  DELETE = "DELETE"
+  DELETE = "DELETE",
+  CHECK = "CHECK"
 }
 export const ToDoForm: React.FC<Props> = ({ isEditing, edit, setIsEditing }): JSX.Element => {
   const [activity, setActivity] = useState<string>("");

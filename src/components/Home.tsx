@@ -6,8 +6,9 @@ import { Payload, State } from '../state/actions'
 import { BoxWrapper } from './NotesWrapper'
 import { Note } from './Note'
 import styled from 'styled-components';
-import { ToDoForm } from './Forms/ToDoForm'
+import { PopupType, ToDoForm } from './Forms/ToDoForm'
 import { DoneNotesWrapper } from './DoneNotesWrapper'
+import { useAlert } from 'react-alert'
 // import { connect } from "react-redux";
 
 
@@ -16,6 +17,7 @@ const Home: React.FC = (): JSX.Element => {
   console.log("notes: ", data);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(false);
+  const alert = useAlert();
   const [edit, setEdit] = useState<Payload>({
     id: null,
     activity: '',
@@ -33,9 +35,21 @@ const Home: React.FC = (): JSX.Element => {
     const retrieveNotes = () => dispatch(getNotesAction());
     retrieveNotes();
   }, [dispatch]);
+  const popupMessage = (msg: string, type: PopupType): void => {
+    if (PopupType.ADD === type){
+      alert.success(msg);
+    }else if (PopupType.UPDATE === type){
+      alert.info(msg);
+    }else if (PopupType.DELETE === type){
+      alert.error(msg);
+    }else if (PopupType.CHECK === type){
+      alert.info(msg);
+    }
+  }
   const removeActivity = (id: number | null = null) => {
     if (!id) return;
     dispatch(deleteNoteAction(id));
+    popupMessage("Task Deleted",PopupType.DELETE)
     console.log('deleted!');
   }
   const editActivity = (id: number | null = null) => {
@@ -61,12 +75,12 @@ const Home: React.FC = (): JSX.Element => {
         activity: note.activity,
         isDone: true
       })
-      // console.log("done: ",done);
       dispatch(setDoneNoteAction({
         id: note.id,
         activity: note.activity,
         isDone: true
       }));
+      popupMessage("Task Done",PopupType.DELETE)
     }
   }
 
@@ -89,6 +103,7 @@ const Home: React.FC = (): JSX.Element => {
               {
                 notes.map(note => (!note.isDone) && <Note key={note.id}
                   id={note.id}
+                  isDone={note.isDone}
                   activity={note.activity}
                   doneActivity={doneActivity}
                   editActivity={editActivity}
@@ -103,6 +118,7 @@ const Home: React.FC = (): JSX.Element => {
               {
                 notes.map(note => (note.isDone) && <Note key={note.id}
                   id={note.id}
+                  isDone={note.isDone}
                   activity={note.activity}
                   doneActivity={doneActivity}
                   editActivity={editActivity}

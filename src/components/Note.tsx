@@ -8,18 +8,25 @@ import { ButtonType } from './Types';
 interface Props {
   activity: string,
   id: number | null,
+  isDone: boolean | null
   doneActivity: (id: number | null) => void,
   editActivity: (id: number | null) => void,
   removeActivity: (id: number | null) => void,
 }
 
-export const Note: React.FC<Props> = ({ activity, id, doneActivity, editActivity, removeActivity }): JSX.Element => {
+export const Note: React.FC<Props> = ({ activity, id, isDone, doneActivity, editActivity, removeActivity }): JSX.Element => {
   return (
-    <NoteCard>
+    <NoteCard isDone={isDone}>
       <ActivityText>{activity}</ActivityText>
       <ButtonWrapper>
-        <ButtonAction href="#" type={ButtonType.ADD} onClick={() => doneActivity(id)}><AiFillCheckCircle /></ButtonAction>
-        <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => editActivity(id)}><AiFillEdit /></ButtonAction>
+        {
+          (!isDone) && (
+            <>
+              <ButtonAction href="#" type={ButtonType.ADD} onClick={() => doneActivity(id)}><AiFillCheckCircle /></ButtonAction>
+              <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => editActivity(id)}><AiFillEdit /></ButtonAction>
+            </>
+          )
+        } 
         <ButtonAction href="#" type={ButtonType.DELETE} onClick={() => removeActivity(id)}><AiFillDelete /></ButtonAction>
       </ButtonWrapper>
     </NoteCard>
@@ -50,8 +57,17 @@ const ButtonAction = styled.a`
 `;
 
 const NoteCard = styled.div`
-  background: whitesmoke;
-  border: 1px solid #ccc;
+  ${(props: any) => (props.isDone) ? css`
+    background: #a0eca4;
+    border: 1px solid #424242;
+    margin: 0.2rem 0;
+  ` :  css`
+    background: whitesmoke;
+    border: 1px solid #ccc;
+    margin: 0.2rem 0;
+  `
+  }
+  border-radius:5px;
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
