@@ -28,6 +28,7 @@ const reducer = (state: State = initialState, action: Action) => {
         notes: [action.payload, ...state.notes],
         loading:false
       }
+    case ActionType.SETDONE_ERROR:
     case ActionType.ADD_ERROR:
     case ActionType.RETRIEVE_ERROR:
       return {
@@ -42,6 +43,7 @@ const reducer = (state: State = initialState, action: Action) => {
         loading:false,
         error:null
       }
+    case ActionType.SETDONE:
     case ActionType.EDIT:
       return {
         ...state,

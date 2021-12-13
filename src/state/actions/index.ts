@@ -3,6 +3,7 @@ import { ActionType } from "../action-types";
 export interface Payload {
   id:number | null,
   activity: string,
+  isDone: boolean | null,
 }
 interface Error {
   msg: string,
@@ -57,6 +58,15 @@ interface DeleteError {
 interface ClearNotes {
   type: ActionType.CLEAR_NOTES,
 }
+interface SetDoneNote {
+  type: ActionType.SETDONE,
+  payload: Payload
+}
+
+interface SetDoneNoteError {
+  type: ActionType.SETDONE_ERROR,
+  payload: Error
+}
 
 export type Action = AddAction | 
                      AddSuccess |
@@ -68,4 +78,6 @@ export type Action = AddAction |
                      RetrieveSuccess |
                      RetrieveError | 
                      ClearNotes | 
-                     RetrieveSingleNote
+                     RetrieveSingleNote |
+                     SetDoneNote | 
+                     SetDoneNoteError

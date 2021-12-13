@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { AiFillEdit, AiFillCheckCircle, AiFillDelete } from 'react-icons/all';
 import { ButtonType } from './Types';
 // import { useDispatch } from 'react-redux';
@@ -8,16 +8,17 @@ import { ButtonType } from './Types';
 interface Props {
   activity: string,
   id: number | null,
+  doneActivity: (id: number | null) => void,
   editActivity: (id: number | null) => void,
   removeActivity: (id: number | null) => void,
 }
 
-export const Note: React.FC<Props> = ({ activity, id, editActivity, removeActivity }): JSX.Element => {
+export const Note: React.FC<Props> = ({ activity, id, doneActivity, editActivity, removeActivity }): JSX.Element => {
   return (
     <NoteCard>
       <ActivityText>{activity}</ActivityText>
       <ButtonWrapper>
-        <ButtonAction href="#" type={ButtonType.ADD}><AiFillCheckCircle /></ButtonAction>
+        <ButtonAction href="#" type={ButtonType.ADD} onClick={() => doneActivity(id)}><AiFillCheckCircle /></ButtonAction>
         <ButtonAction href="#" type={ButtonType.UPDATE} onClick={() => editActivity(id)}><AiFillEdit /></ButtonAction>
         <ButtonAction href="#" type={ButtonType.DELETE} onClick={() => removeActivity(id)}><AiFillDelete /></ButtonAction>
       </ButtonWrapper>
@@ -37,6 +38,15 @@ const ButtonAction = styled.a`
   justify-content: center;
   align-items: center;
   font-size: 110%;
+  ${(props:any) => (props.type === ButtonType.ADD) && css`
+    color: #71B874;
+  `};
+  ${(props:any) => (props.type === ButtonType.UPDATE) && css`
+    color: #F7AB31;
+  `};
+  ${(props:any) => (props.type === ButtonType.DELETE) && css`
+    color: #EF645B;
+  `};
 `;
 
 const NoteCard = styled.div`

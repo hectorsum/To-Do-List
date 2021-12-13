@@ -19,21 +19,21 @@ export const SubmitButton:React.FC<Type> = ({btnType})=> {
 
 const Button = styled.button`
   ${(props:Type) => (props.btnType.toUpperCase() === ButtonType.ADD) && css`
-    background-color: #2eb635;
+    background-color: #71B874;
     &:hover{
-      background-color: #2eb635;
+      background-color: #71B874;
     }
     &:focus{
-      background-color: #2eb635;
+      background-color: #71B874;
     }
   `};
   ${(props:Type) => (props.btnType.toUpperCase() === ButtonType.UPDATE) && css`
-    background-color: #bdbd45;
+    background-color: #F7AB31;
     &:hover{
-      background-color: #bdbd45bc;
+      background-color: #F7AB31;
     }
     &:focus{
-      background-color: #bdbd45;
+      background-color: #F7AB31;
     }
   `};
   ${(props:Type) => (props.btnType.toUpperCase() === ButtonType.DELETE) && css`
@@ -57,7 +57,7 @@ const Button = styled.button`
     box-shadow: 0 0 0 3px rgba(0, 0, 0,0.2);
   }
   &:focus{
-    transform: scale(1.02);
+    /* transform: scale(1.02); */
     border: 1px solid #222;
     box-shadow: 0 0 0 3px rgba(0, 0, 0,0.2);
   }

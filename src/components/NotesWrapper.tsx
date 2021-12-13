@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components';
+import { Box } from './Buttons/Box'
+
 interface Props {
   children: React.ReactNode
 }
@@ -10,8 +11,3 @@ export const BoxWrapper: React.FC<Props> = ({children}): JSX.Element => {
     </Box>
   )
 }
-
-const Box = styled.div`
-  max-height: 350px;
-  overflow: auto;
-`

@@ -11,6 +11,7 @@ import { ButtonType } from '../Types';
 
 export interface Data {
   activity: string
+  isDone: boolean
 }
 
 type FormElement = React.SyntheticEvent
@@ -26,6 +27,7 @@ enum PopupType {
 }
 export const ToDoForm: React.FC<Props> = ({ isEditing, edit, setIsEditing }): JSX.Element => {
   const [activity, setActivity] = useState<string>("");
+  const [isDone, setIsDone] = useState<boolean>(false);
   const dispatch = useDispatch();
   const alert = useAlert();
   //To have interaction with action functions we need to insert it to a dispatch
@@ -41,7 +43,7 @@ export const ToDoForm: React.FC<Props> = ({ isEditing, edit, setIsEditing }): JS
       document.getElementsByName('activity')[0].focus();
       return;
     };
-    addNote({ activity })
+    addNote({ activity, isDone })
     setActivity('');
     alert.success("New note added!");
   }
@@ -58,8 +60,8 @@ export const ToDoForm: React.FC<Props> = ({ isEditing, edit, setIsEditing }): JS
 
   const handleUpdate = (e: FormElement) => {
     e.preventDefault();
-    let { id } = edit;
-    updateNote({id, activity});
+    let { id, isDone } = edit;
+    updateNote({id, activity, isDone});
     setIsEditing(false);
     emptyField();
     popupMessage("Note Updated!", PopupType.UPDATE);

@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state'
-import { deleteNoteAction, getNotesAction } from '../state/action-creators'
+import { deleteNoteAction, getNotesAction, getSingleNote, setDoneNoteAction } from '../state/action-creators'
 import { Payload, State } from '../state/actions'
 import { BoxWrapper } from './NotesWrapper'
 import { Note } from './Note'
 import styled from 'styled-components';
 import { ToDoForm } from './Forms/ToDoForm'
+import { DoneNotesWrapper } from './DoneNotesWrapper'
 // import { connect } from "react-redux";
 
 
 const Home: React.FC = (): JSX.Element => {
   const data: State = useSelector((state: RootState) => state.notes)
-  console.log("notes: ",data);
+  console.log("notes: ", data);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(false);
   const [edit, setEdit] = useState<Payload>({
-    id:null,
-    activity:'',
+    id: null,
+    activity: '',
+    isDone: null,
+  });
+  const [done, setDone] = useState<Payload>({
+    id: null,
+    activity: '',
+    isDone: false,
   });
   const { loading, notes } = data
   const dispatch = useDispatch();
@@ -25,41 +33,94 @@ const Home: React.FC = (): JSX.Element => {
     const retrieveNotes = () => dispatch(getNotesAction());
     retrieveNotes();
   }, [dispatch]);
-  const removeActivity = (id:number | null = null) => {
+  const removeActivity = (id: number | null = null) => {
     if (!id) return;
     dispatch(deleteNoteAction(id));
     console.log('deleted!');
   }
-  const editActivity = (id:number | null = null) => {
+  const editActivity = (id: number | null = null) => {
     if (!id) return;
     const note = notes.find(note => note.id === id);
-    if(note){
+    if (note) {
       setIsEditing(true);
       setEdit({
         id,
-        activity: note.activity
+        activity: note.activity,
+        isDone: note.isDone,
       })
     }
   }
+  const doneActivity = (id: number | null) => {
+    if (!id) return;
+    // console.log("id: ",id);
+    const note = notes.find(note => note.id === id);
+    if (note) {
+      setIsDone(true);
+      setDone({
+        id,
+        activity: note.activity,
+        isDone: true
+      })
+      // console.log("done: ",done);
+      dispatch(setDoneNoteAction({
+        id: note.id,
+        activity: note.activity,
+        isDone: true
+      }));
+    }
+  }
+
+  const hasDoneElements = () => notes.filter(note => note.isDone).length > 0;
+
+  useEffect(() => {
+    if(isDone && done.id){
+      const retrieveNotes = (id: number) => dispatch(getSingleNote(id));
+      retrieveNotes(done.id);
+    }
+  },[dispatch, done.id, done.isDone, isDone])
+
   return (
     <Wrapper>
-      <ToDoForm isEditing={isEditing} edit={edit} setIsEditing={setIsEditing}/>
+      <ToDoForm isEditing={isEditing} edit={edit} setIsEditing={setIsEditing} />
       {
         (loading) ? <h2>Loading...</h2> :
-          <BoxWrapper>
+          <>
+            <BoxWrapper>
+              {
+                notes.map(note => (!note.isDone) && <Note key={note.id}
+                  id={note.id}
+                  activity={note.activity}
+                  doneActivity={doneActivity}
+                  editActivity={editActivity}
+                  removeActivity={removeActivity}
+                />)
+              }
+            </BoxWrapper>
             {
-              notes.map(note => <Note key={note.id} 
-                                      id={note.id} 
-                                      activity={note.activity}
-                                      editActivity={editActivity}
-                                      removeActivity={removeActivity}
-                                      />)
+              (hasDoneElements()) && <Separator />
             }
-          </BoxWrapper>
+            <DoneNotesWrapper>
+              {
+                notes.map(note => (note.isDone) && <Note key={note.id}
+                  id={note.id}
+                  activity={note.activity}
+                  doneActivity={doneActivity}
+                  editActivity={editActivity}
+                  removeActivity={removeActivity}
+                />)
+              }
+            </DoneNotesWrapper>
+          </>
       }
     </Wrapper>
   )
 }
+
+const Separator = styled.hr`
+  background: #1c1c1c;
+  margin: 0.5rem 0;
+}
+`
 
 const Wrapper = styled.div`
   width: 30%;
