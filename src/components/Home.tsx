@@ -80,7 +80,7 @@ const Home: React.FC = (): JSX.Element => {
         activity: note.activity,
         isDone: true
       }));
-      popupMessage("Task Done",PopupType.DELETE)
+      popupMessage("Task Done",PopupType.CHECK)
     }
   }
 

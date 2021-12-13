@@ -1,9 +1,9 @@
 {
   "notes": [
     {
+      "id": 8,
       "activity": "sadsada",
-      "isDone": false,
-      "id": 8
+      "isDone": true
     },
     {
       "activity": "21312312",
