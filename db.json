@@ -1,9 +1,9 @@
 {
   "notes": [
     {
+      "id": 1,
       "activity": "Make the bed",
-      "isDone": false,
-      "id": 1
+      "isDone": true
     },
     {
       "id": 2,
@@ -14,6 +14,11 @@
       "activity": "Pet my puppy",
       "isDone": false,
       "id": 3
+    },
+    {
+      "activity": "adasdas",
+      "isDone": false,
+      "id": 4
     }
   ]
 }
