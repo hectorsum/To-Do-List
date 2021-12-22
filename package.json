@@ -30,11 +30,11 @@
   },
   "proxy": "http://localhost:5000",
   "scripts": {
-    "dev": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "concurrently \"json-server db.json --port 4000 --watch\" \"npm run start\"",
+    "dev": "concurrently \"json-server db.json --port 4000 --watch\" \"npm run start\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "compilerOptions": {
