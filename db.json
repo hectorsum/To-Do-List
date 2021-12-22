@@ -1,14 +1,19 @@
 {
   "notes": [
     {
-      "id": 8,
-      "activity": "sadsada",
+      "activity": "Make the bed",
+      "isDone": false,
+      "id": 1
+    },
+    {
+      "id": 2,
+      "activity": "Do the dishes",
       "isDone": true
     },
     {
-      "activity": "21312312",
+      "activity": "Pet my puppy",
       "isDone": false,
-      "id": 9
+      "id": 3
     }
   ]
 }
