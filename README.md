@@ -2,7 +2,7 @@
 Project based on adding chores on a list through an input field where you can also set them done, edit or delete.
 
 ## Preview
-![preview](./public/images/screenshot.jpg)
+![preview](./public/images/screenshot.JPG)
 
 ### Give it a try!
 **<https://todo-app-sum.herokuapp.com/#/>**
