@@ -31,10 +31,11 @@
   },
   "proxy": "http://localhost:4000",
   "scripts": {
-    "start": "react-scripts start",
+    "s": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "start":"node server.js",
     "dev": "concurrently \"json-server db.json --port 4000 --watch\" \"npm run start\""
   },
   "compilerOptions": {
